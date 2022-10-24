@@ -1,19 +1,24 @@
 <template>
     <div class="calc-switch">
-        <label class="calc-switch__wrapper">
-            <input class="calc-switch__input" type="checkbox">
-            <span class="calc-switch__slider"></span>
-        </label>
-    </div>
+    <label class="calc-switch__wrapper">
+        <input @change="$emit('myinput', $event.target.checked)"  class="calc-switch__input" type="checkbox">
+        <span class="calc-switch__slider"></span>
+    </label>
+</div> 
 </template>
 
 <script>
 export default {
-    name: 'button-switch'
+    name: 'button-switch',
 }
 </script>
 
 <style lang="scss">
+.test {
+    width: 200px;
+    height: 20px;
+    background: red;
+}
 .calc-switch {
     font-size: 0;
         &__wrapper {

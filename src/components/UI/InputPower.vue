@@ -4,6 +4,9 @@
             <input class="calc-input__data-input" 
                 type="number" 
                 :id="inputId"
+                :disabled="isD"
+                :value="value" 
+                @input="updateName"
             >
             <span class="calc-input__units">
                 <slot>Lorem</slot>
@@ -19,8 +22,19 @@
 export default {
     name: 'input-power',
     props: {
-        inputId: String
+        inputId: String,
+        isD: {
+            type: Boolean,
+            default: false
+        },
+        value:[Number, String]
+    },
+    methods: {
+        updateName(e) {
+      this.$emit("input", e.target.value);
     }
+    }
+    
 }
 </script>
 

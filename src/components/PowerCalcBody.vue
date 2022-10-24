@@ -1,90 +1,312 @@
 <template>
-    <section class="calc-body">
-        <section class="calc-body__source-power">
-          
-          <section class="calc-body__source-header">
-            <h3 class="calc-body__source-power-header-title">Расчет источника бесперебойного питания (расчет ИБП)</h3>
-          </section>
+  <section class="calc-body">
 
-          <section class="calc-body__source-power-body">
-            <form class="calc-body__source-form" action="">
-              <section class="calc-body__source-power-select">
-                <div class="calc-body__checkbox">
-                  <input-checkbox inputType='line-interactive'>ИБП линейно интерактивные</input-checkbox>
-                  <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </helper-button>
-                </div>
     
-                <div class="calc-body__checkbox">
-                  <input-checkbox inputType='regular-sinusoid'>ИБП с правильной синусоидой</input-checkbox>
-                  <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </helper-button>
-                </div>
-    
-                <div class="calc-body__checkbox">
-                  <input-checkbox inputType='smart'>Smart ИБП Online</input-checkbox>
-                  <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </helper-button>
-                </div>
-    
-                <div class="calc-body__checkbox">
-                  <input-checkbox inputType='hybrid'>ИБП гибридный MPPT с правильной синусоидой</input-checkbox>
-                  <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </helper-button>
-                </div>
-    
-                <div class="calc-body__checkbox">
-                  <input-checkbox inputType='mppt'>ИБП MPPT с правильной синусоидой</input-checkbox>
-                  <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </helper-button>
-                </div>
-    
-                <div class="calc-body__checkbox">
-                  <input-checkbox inputType='all'>Выбрать все</input-checkbox>
-                </div>
-              </section>
-              
-              <section class="calc-body__source-power-inputs-enter">
+     <section class="calc-body__source-power">
+        <section class="calc-body__source-header">
+          <h3 class="calc-body__source-power-header-title">
+            Расчет источника бесперебойного питания (расчет ИБП)
+          </h3>
+        </section>
 
-                <div>
-                  <h3 class="calc-body__subtitle source-power">Суммарная мощность приборов, подключаемые к ИБП:</h3>
-                  <input-power inputId='w'>W</input-power>
-                </div>
+        <section class="calc-body__source-power-body">
+          <form class="calc-body__source-form" action="">
+            <section class="calc-body__source-power-select">
+              <div class="calc-body__checkbox">
+                <input-checkbox inputType="line-interactive"
+                v-model="checkboxes.interactiveUPSLine">
+                ИБП линейно интерактивные</input-checkbox
+                >
+                <helper-button
+                  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </helper-button>
+              </div>
 
-                <div class="calc-body__need-power">
-                  <h3 class="calc-body__subtitle source-power">	Необходимая мощность ИБП:</h3>
-                  <div class="calc-body__data-input-general-wrapper">
-                    <input-power inputId='w'>W</input-power>
-                    <input-power inputId='va'>VA</input-power>
-                  </div>
-                </div>
+              <div class="calc-body__checkbox">
+                <input-checkbox inputType="regular-sinusoid" v-model="checkboxes.correctSineUPS"
+                  >ИБП с правильной синусоидой</input-checkbox
+                >
+                <helper-button
+                  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </helper-button>
+              </div>
 
-                <button-orange/>
+              <div class="calc-body__checkbox">
+                <input-checkbox inputType="smart" v-model="checkboxes.smartUPS"
+                  >Smart ИБП Online</input-checkbox
+                >
+                <helper-button
+                  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </helper-button>
+              </div>
 
-              </section>
-            </form>
-            <section class="calc-body__recommended">
-              <h3 class="calc-body__subtitle orande-title">Рекомендуемые ИБП:</h3>
-              <section class="calc-body__recommended-items">
+              <div class="calc-body__checkbox">
+                <input-checkbox inputType="hybrid" v-model="checkboxes.gibridUPS"
+                  >ИБП гибридный MPPT с правильной синусоидой</input-checkbox
+                >
+                <helper-button
+                  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </helper-button>
+              </div>
 
-              </section>
-              <button-catalog/>
+              <div class="calc-body__checkbox">
+                <input-checkbox inputType="mppt" v-model="checkboxes.mpptUPS"
+                  >ИБП MPPT с правильной синусоидой</input-checkbox
+                >
+                <helper-button
+                  >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </helper-button>
+              </div>
+
+              <div class="calc-body__checkbox" >
+                <input-checkbox inputType="all" v-model="checkboxes.selectAll" @input="selectAllCheckboxes">Выбрать все</input-checkbox>
+              </div>
             </section>
 
-          </section>
+            <section class="calc-body__source-power-inputs-enter">
+              <div>
+                <h3 class="calc-body__subtitle source-power">
+                  Суммарная мощность приборов, подключаемые к ИБП:
+                </h3>
+                <input-power inputId="w" v-model.number="calculationUPS.instrumentPower">W</input-power>
+              </div>
 
+              <div class="calc-body__need-power">
+                <h3 class="calc-body__subtitle source-power">
+                  Необходимая мощность ИБП:
+                </h3>
+                <div class="calc-body__data-input-general-wrapper">
+                  <input-power inputId="w" v-model.number="calculationUPS.powerUPSW">W</input-power>
+                  <input-power inputId="va" v-model.number="calculationUPS.powerUPSVA">VA</input-power>
+                </div>
+              </div>
+
+              <button-orange  />
+            </section>
+          </form>
+          <power-calc-recommendation>Рекомендуемые ИБП:</power-calc-recommendation>
         </section>
-    </section>
+      </section>
+
+      <section class="calc-body__source-power">
+        <section class="calc-body__source-header">
+          <h3 class="calc-body__source-power-header-title">
+            Расчет емкости аккумуляторной батареи для источника бесперебойного
+            питания
+          </h3>
+        </section>
+
+        <section class="calc-body__source-power-body">
+          <form class="calc-body__form" action="">
+            <section class="calc-body__inputs-wrapper">
+              <section class="calc-body__inputs-enter">
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help">
+                    <h3 class="calc-body__subtitle">Мощность ИБП:</h3>
+                    <helper-button
+                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </helper-button>
+                  </div>
+
+                  <input-power inputId="w" v-model.number="calculationBattery.powerUPS">W</input-power>
+                </div>
+
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help switch">
+                    <h3 class="calc-body__subtitle">КПД инвертора:</h3>
+                    <helper-button
+                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </helper-button>
+                    <button-switch @myinput="isActive" />
+                  </div>
+
+                  <input-power inputId="w" :isD="isDisabled" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
+                </div>
+
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help">
+                    <h3 class="calc-body__subtitle">Время работы:</h3>
+                  </div>
+
+                  <input-power inputId="time" v-model.number="calculationBattery.time">часов</input-power>
+                </div>
+
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help">
+                    <h3 class="calc-body__subtitle">Номинальное напряжение АКБ:</h3>
+                  </div>
+
+                  <input-power inputId="v" v-model.number="calculationBattery.ratedBatteryVoltage">V</input-power>
+                </div>
+              </section>
+
+              <button-orange />
+            </section>
+
+            <div class="calc-body__data-input-section">
+              <h3 class="calc-body__subtitle source-power">
+                Минимальная ёмкость АКБ:
+              </h3>
+              <input-power inputId="ah" v-model.number="calculationBattery.result">Ah</input-power>
+            </div>
+          </form>
+
+          <power-calc-recommendation
+            >Рекомендуемые ИБП:</power-calc-recommendation
+          >
+        </section>
+      </section>
+
+      <section class="calc-body__source-power">
+        <section class="calc-body__source-header">
+          <h3 class="calc-body__source-power-header-title">
+            Расчет времени автономной работы ИБП
+          </h3>
+        </section>
+
+        <section class="calc-body__source-power-body">
+          <form class="calc-body__form" action="">
+            <section class="calc-body__inputs-wrapper">
+              <section class="calc-body__inputs-enter">
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help">
+                    <h3 class="calc-body__subtitle">Нагрузка, W:</h3>
+                    <helper-button
+                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </helper-button>
+                  </div>
+
+                  <input-power inputId="w" v-model.number="calculationUPSRuntime.load">W</input-power>
+                </div>
+
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help switch">
+                    <h3 class="calc-body__subtitle">КПД инвертора:</h3>
+                    <helper-button
+                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua.
+                    </helper-button>
+                    <button-switch />
+                  </div>
+
+                  <input-power inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
+                </div>
+
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help">
+                    <h3 class="calc-body__subtitle">Номинальное напряжение АКБ:</h3>
+                  </div>
+
+                  <input-power inputId="v" v-model.number="calculationUPSRuntime.ratedBatteryVoltage">V</input-power>
+                </div>
+
+                <div class="calc-body__data-input-section">
+                  <div class="calc-body__input-help">
+                    <h3 class="calc-body__subtitle">Ёмкость АКБ:</h3>
+                  </div>
+
+                  <input-power inputId="ah" v-model.number="calculationUPSRuntime.batteryCapacity">Ah</input-power>
+                </div>
+              </section>
+
+              <button-orange />
+            </section>
+
+            <div class="calc-body__data-input-section">
+              <h3 class="calc-body__subtitle source-power">Время работы ИБП:</h3>
+              <input-power inputId="time" v-model.number="calculationUPSRuntime.result">часов</input-power>
+            </div>
+          </form>
+
+          <power-calc-recommendation
+            >Рекомендуемые ИБП:</power-calc-recommendation
+          >
+        </section>
+      </section>
+  </section>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { reactive } from "vue";
+import PowerCalcRecommendation from './PowerCalcRecommendation.vue'
 
 export default Vue.extend({
-  components: {},
- 
-})
+  components: {PowerCalcRecommendation},
+
+  data() {
+    return {
+      isDisabled: false,
+       checkboxes: {
+         interactiveUPSLine: false as boolean,
+         correctSineUPS: false as boolean,
+         smartUPS: false as boolean,
+         gibridUPS: false as boolean,
+         mpptUPS: false as boolean,
+         selectAll: false as boolean
+      },
+      calculationUPS: {
+        instrumentPower: '',
+        powerUPSW: '',
+        powerUPSVA: '',
+        result: ''
+      },
+      calculationBattery: {
+        powerUPS: '',
+        inverterEfficiency: '', 
+        time: '',
+        ratedBatteryVoltage:'',
+        result: ''
+      },
+      calculationUPSRuntime: {
+        load: '',
+        inverterEfficiency: '',
+        ratedBatteryVoltage: '',
+        batteryCapacity: '',
+        result: ''
+      }
+    }
+  },
+  
+  methods: {
+    isActive(state:boolean) {
+        this.isDisabled = state;
+    },
+    selectAllCheckboxes() {
+
+        for (const key in this.checkboxes) {
+          if(this.checkboxes.selectAll) {
+              this.checkboxes[key] = true;
+          } else {
+            this.checkboxes[key] = false;
+          }
+          
+        }
+    }
+  },
+  
+});
 </script>
 
 <style lang="scss">
-    .calc-power {
-        &__inputs-wrapper {
-    @include flex-container($direction: column, $spacing: flex-start, $alignment: null);
+.calc-body {
+  &__inputs-wrapper {
+    @include flex-container(
+      $direction: column,
+      $spacing: flex-start,
+      $alignment: null
+    );
     row-gap: 56px;
     margin-bottom: 56px;
     @media (max-width: 960px) {
@@ -93,31 +315,35 @@ export default Vue.extend({
   }
 
   &__source-power {
-    border-bottom: 1px solid #8A8A8A;
+    border-bottom: 1px solid #8a8a8a;
     padding-top: 48px;
   }
 
-  &__source-power:nth-last-child(-n+2) {
+  &__source-power:nth-last-child(-n + 2) {
     border: none;
     margin-bottom: 96px;
-     @media (max-width: 960px) {
+    @media (max-width: 960px) {
       margin-bottom: 56px;
-     }
+    }
   }
 
   &__source-power-header-title {
-     text-align: center;
-     @include font($font-size: 20, $line-height: 24, $weight: 600);
-     text-transform: uppercase;
-     color: #2B2B2B;
-     margin-bottom: 48px;
-     @media (max-width: 960px) {
+    text-align: center;
+    @include font($font-size: 20, $line-height: 24, $weight: 600);
+    text-transform: uppercase;
+    color: #2b2b2b;
+    margin-bottom: 48px;
+    @media (max-width: 960px) {
       @include font($font-size: 16, $line-height: 19, $weight: 700);
-     }
+    }
   }
 
   &__source-form {
-    @include flex-container($direction: row, $spacing: space-between, $alignment: null);
+    @include flex-container(
+      $direction: row,
+      $spacing: space-between,
+      $alignment: null
+    );
     margin-bottom: 56px;
     @media (max-width: 960px) {
       flex-direction: column;
@@ -127,7 +353,11 @@ export default Vue.extend({
   }
 
   &__checkbox {
-    @include flex-container($direction: row, $spacing: null, $alignment: center);
+    @include flex-container(
+      $direction: row,
+      $spacing: null,
+      $alignment: center
+    );
     column-gap: 16px;
   }
 
@@ -142,21 +372,29 @@ export default Vue.extend({
   }
 
   &__source-power-select {
-    @include flex-container($direction: column, $spacing: null, $alignment: null);
+    @include flex-container(
+      $direction: column,
+      $spacing: null,
+      $alignment: null
+    );
     row-gap: 24px;
   }
 
   &__source-power-inputs-enter {
-    @include flex-container($direction: column, $spacing: null, $alignment: left);
+    @include flex-container(
+      $direction: column,
+      $spacing: null,
+      $alignment: left
+    );
     row-gap: 56px;
     max-width: 678px;
     width: 100%;
-     @media (max-width: 1250px) { 
+    @media (max-width: 1250px) {
       max-width: 343px;
-     }
-     @media (max-width: 960px) {
-      row-gap: 32px;  
-     }
+    }
+    @media (max-width: 960px) {
+      row-gap: 32px;
+    }
   }
 
   &__data-input-section {
@@ -170,11 +408,11 @@ export default Vue.extend({
   &__subtitle {
     letter-spacing: 0.02em;
     @include font($font-size: 20, $line-height: 28, $weight: 400);
-    color: #2B2B2B;
+    color: #2b2b2b;
     &.orande-title {
       @include font($font-size: 20, $line-height: 30, $weight: 600);
       text-transform: uppercase;
-      color: #F36C21;
+      color: #f36c21;
       margin-bottom: 24px;
     }
     &.source-power {
@@ -184,7 +422,6 @@ export default Vue.extend({
       }
       @media (max-width: 960px) {
         @include font($font-size: 16, $line-height: 22, $weight: 400);
-        
       }
     }
   }
@@ -200,12 +437,16 @@ export default Vue.extend({
   }
 
   &__input-help {
-     @include flex-container($direction: row, $spacing: null, $alignment: center);
-     column-gap: 16px;
-     margin-bottom: 24px;
-     &.switch {
+    @include flex-container(
+      $direction: row,
+      $spacing: null,
+      $alignment: center
+    );
+    column-gap: 16px;
+    margin-bottom: 24px;
+    &.switch {
       margin-bottom: 22px;
-     }
+    }
   }
 
   &__form {
@@ -216,15 +457,19 @@ export default Vue.extend({
   }
 
   &__inputs-enter {
-     @include flex-container($direction: row, $spacing: null, $alignment: baseline);
-     gap: 24px;
-     flex-wrap: wrap;
-     max-width: 1380px;
-     width: 100%;
-     @media (max-width: 960px) {
+    @include flex-container(
+      $direction: row,
+      $spacing: null,
+      $alignment: baseline
+    );
+    gap: 24px;
+    flex-wrap: wrap;
+    max-width: 1380px;
+    width: 100%;
+    @media (max-width: 960px) {
       flex-direction: column;
       gap: 32px;
-     }
-  }
     }
+  }
+}
 </style>

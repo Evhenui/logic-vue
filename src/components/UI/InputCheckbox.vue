@@ -4,14 +4,11 @@
             type="checkbox" 
             :id='inputType' 
             :name='inputType'
-            value="ok"
+            :checked="value" 
+            @change="updateChecked"
         >
-        <label class="checkbox-calc__label" 
-            :for='inputType'
-        >
-        <slot>
-            lorem
-        </slot>
+        <label class="checkbox-calc__label" :for='inputType'>
+        <slot>lorem</slot>
         </label>
     </div>
 </template>
@@ -20,7 +17,13 @@
 export default {
     name: 'input-checkbox',
     props: {
-        inputType: String
+        inputType: String,
+        value: Boolean
+    },
+    methods: {
+        updateChecked(e) {
+      this.$emit("input", e.target.checked);
+      }
     }
 }
 </script>
