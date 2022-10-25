@@ -1,12 +1,17 @@
 <template>
-   <button class="button-orange">
+   <button @click.prevent="resultData" class="button-orange">
     <slot>Рассчитать</slot>
    </button>
 </template>
 
 <script>
 export default {
-    name: 'button-orange'
+    name: 'button-orange',
+    methods: {
+      resultData() {
+       this.$emit('getResult')
+      }
+    }
 }
 </script>
 

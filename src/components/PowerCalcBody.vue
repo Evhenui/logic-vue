@@ -64,29 +64,26 @@
               </div>
 
               <div class="calc-body__checkbox" >
-                <input-checkbox inputType="all" v-model="checkboxes.selectAll" @input="selectAllCheckboxes">Выбрать все</input-checkbox>
+                <input-checkbox v-if="!checkboxes.selectAll" inputType="all" v-model="checkboxes.selectAll" @input="selectAllCheckboxes">Выбрать все</input-checkbox>
+                <input-checkbox v-else inputType="all" v-model="checkboxes.selectAll" @input="selectAllCheckboxes"> Снять выделение</input-checkbox>
               </div>
             </section>
 
             <section class="calc-body__source-power-inputs-enter">
               <div>
-                <h3 class="calc-body__subtitle source-power">
-                  Суммарная мощность приборов, подключаемые к ИБП:
-                </h3>
-                <input-power inputId="w" v-model.number="calculationUPS.instrumentPower">W</input-power>
+                <h3 class="calc-body__subtitle source-power">Суммарная мощность приборов, подключаемые к ИБП:</h3>
+                <input-power typeInput="number" inputId="w" v-model.number="calculationUPS.instrumentPower">W</input-power>
               </div>
 
               <div class="calc-body__need-power">
-                <h3 class="calc-body__subtitle source-power">
-                  Необходимая мощность ИБП:
-                </h3>
+                <h3 class="calc-body__subtitle source-power">Необходимая мощность ИБП:</h3>
                 <div class="calc-body__data-input-general-wrapper">
-                  <input-power inputId="w" v-model.number="calculationUPS.powerUPSW">W</input-power>
-                  <input-power inputId="va" v-model.number="calculationUPS.powerUPSVA">VA</input-power>
+                  <input-power typeInput="number" inputId="w" v-model.number="calculationUPS.powerUPSW">W</input-power>
+                  <input-power typeInput="number" inputId="va" v-model.number="calculationUPS.powerUPSVA">VA</input-power>
                 </div>
               </div>
 
-              <button-orange  />
+              <button-orange />
             </section>
           </form>
           <power-calc-recommendation>Рекомендуемые ИБП:</power-calc-recommendation>
@@ -115,21 +112,20 @@
                     </helper-button>
                   </div>
 
-                  <input-power inputId="w" v-model.number="calculationBattery.powerUPS">W</input-power>
+                  <input-power typeInput="number" inputId="w" v-model.number="calculationBattery.powerUPS">W</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
                   <div class="calc-body__input-help switch">
                     <h3 class="calc-body__subtitle">КПД инвертора:</h3>
-                    <helper-button
-                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
                     </helper-button>
                     <button-switch @myinput="isActive" />
                   </div>
 
-                  <input-power inputId="w" :isD="isDisabled" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
+                  <input-power typeInput="number" inputId="w" :isD="isDisabled" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -137,7 +133,7 @@
                     <h3 class="calc-body__subtitle">Время работы:</h3>
                   </div>
 
-                  <input-power inputId="time" v-model.number="calculationBattery.time">часов</input-power>
+                  <input-power typeInput="number" inputId="time" v-model.number="calculationBattery.time">часов</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -145,24 +141,22 @@
                     <h3 class="calc-body__subtitle">Номинальное напряжение АКБ:</h3>
                   </div>
 
-                  <input-power inputId="v" v-model.number="calculationBattery.ratedBatteryVoltage">V</input-power>
+                  <input-power typeInput="number" inputId="v" v-model.number="calculationBattery.ratedBatteryVoltage">V</input-power>
                 </div>
               </section>
 
-              <button-orange />
+              <button-orange @getResult="getResultCalculationBattery" />
             </section>
 
             <div class="calc-body__data-input-section">
               <h3 class="calc-body__subtitle source-power">
                 Минимальная ёмкость АКБ:
               </h3>
-              <input-power inputId="ah" v-model.number="calculationBattery.result">Ah</input-power>
+              <input-power typeInput="text" inputId="ah" v-model.number="calculationBattery.result">Ah</input-power>
             </div>
           </form>
 
-          <power-calc-recommendation
-            >Рекомендуемые ИБП:</power-calc-recommendation
-          >
+          <power-calc-recommendation>Рекомендуемые ИБП:</power-calc-recommendation>
         </section>
       </section>
 
@@ -187,7 +181,7 @@
                     </helper-button>
                   </div>
 
-                  <input-power inputId="w" v-model.number="calculationUPSRuntime.load">W</input-power>
+                  <input-power typeInput="number" inputId="w" v-model.number="calculationUPSRuntime.load">W</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -201,7 +195,7 @@
                     <button-switch />
                   </div>
 
-                  <input-power inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
+                  <input-power typeInput="number" inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -209,7 +203,7 @@
                     <h3 class="calc-body__subtitle">Номинальное напряжение АКБ:</h3>
                   </div>
 
-                  <input-power inputId="v" v-model.number="calculationUPSRuntime.ratedBatteryVoltage">V</input-power>
+                  <input-power typeInput="number" inputId="v" v-model.number="calculationUPSRuntime.ratedBatteryVoltage">V</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -217,29 +211,27 @@
                     <h3 class="calc-body__subtitle">Ёмкость АКБ:</h3>
                   </div>
 
-                  <input-power inputId="ah" v-model.number="calculationUPSRuntime.batteryCapacity">Ah</input-power>
+                  <input-power typeInput="number" inputId="ah" v-model.number="calculationUPSRuntime.batteryCapacity">Ah</input-power>
                 </div>
               </section>
 
-              <button-orange />
+              <button-orange @getResult="getResultCalculationUPS" />
             </section>
 
             <div class="calc-body__data-input-section">
               <h3 class="calc-body__subtitle source-power">Время работы ИБП:</h3>
-              <input-power inputId="time" v-model.number="calculationUPSRuntime.result">часов</input-power>
+              <input-power typeInput="text" inputId="time" v-model.number="calculationUPSRuntime.result">часов</input-power>
             </div>
           </form>
 
-          <power-calc-recommendation
-            >Рекомендуемые ИБП:</power-calc-recommendation
-          >
+          <power-calc-recommendation>Рекомендуемые ИБП:</power-calc-recommendation>
         </section>
       </section>
   </section>
 </template>
 
-<script lang="ts">
-import Vue, { reactive } from "vue";
+<script>
+import Vue from "vue";
 import PowerCalcRecommendation from './PowerCalcRecommendation.vue'
 
 export default Vue.extend({
@@ -249,12 +241,12 @@ export default Vue.extend({
     return {
       isDisabled: false,
        checkboxes: {
-         interactiveUPSLine: false as boolean,
-         correctSineUPS: false as boolean,
-         smartUPS: false as boolean,
-         gibridUPS: false as boolean,
-         mpptUPS: false as boolean,
-         selectAll: false as boolean
+         interactiveUPSLine: false,
+         correctSineUPS: false,
+         smartUPS: false,
+         gibridUPS: false,
+         mpptUPS: false,
+         selectAll: false
       },
       calculationUPS: {
         instrumentPower: '',
@@ -280,19 +272,88 @@ export default Vue.extend({
   },
   
   methods: {
-    isActive(state:boolean) {
+    isActive(state) {
         this.isDisabled = state;
     },
     selectAllCheckboxes() {
-
+      //спросить
         for (const key in this.checkboxes) {
           if(this.checkboxes.selectAll) {
               this.checkboxes[key] = true;
           } else {
             this.checkboxes[key] = false;
-          }
-          
+          } 
         }
+        /*
+        if(this.checkboxes.selectAll) {
+          this.checkboxes.interactiveUPSLine = true;
+          this.checkboxes.correctSineUPS = true;
+          this.checkboxes.smartUPS = true;
+          this.checkboxes.gibridUPS = true;
+          this.checkboxes.mpptUPS = true;
+          this.checkboxes.selectAll = true;
+        } else {
+          this.checkboxes.interactiveUPSLine = false;
+          this.checkboxes.correctSineUPS = false;
+          this.checkboxes.smartUPS = false;
+          this.checkboxes.gibridUPS = false;
+          this.checkboxes.mpptUPS = false;
+          this.checkboxes.selectAll = false;
+        }*/
+       
+    },
+    getResultCalculationUPS() {
+      let watch;
+        if (this.calculationUPSRuntime.load === '') {
+          alert('Введите нагрузку')
+        } else if (this.calculationUPSRuntime.inverterEfficiency === '') {
+          alert('Введите значение КПД инвертора, или переключите в заначение по умолчанию 0,8')
+        } else if (this.calculationUPSRuntime.ratedBatteryVoltage === '') {
+          alert('Введите Номинальное напряжение АКБ')
+        } else if (this.calculationUPSRuntime.ratedBatteryVoltage === '') {
+          alert('Введите емкость АКБ')
+        } else {
+        if (this.calculationUPSRuntime.load > 1 && this.calculationUPSRuntime.load !== ''){
+          watch = (((this.calculationUPSRuntime.ratedBatteryVoltage * this.calculationUPSRuntime.ratedBatteryVoltage ) / this.calculationUPSRuntime.load) * (this.calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
+        } else {
+          watch = (((this.calculationUPSRuntime.ratedBatteryVoltage * this.calculationUPSRuntime.ratedBatteryVoltage ) / this.calculationUPSRuntime.load) * (this.calculationUPSRuntime.inverterEfficiency)).toFixed(2);
+        }
+        
+        if(watch <= 1) {
+          this.calculationUPSRuntime.result = ` ${Math.ceil(watch*60)}min`;
+        } else if (watch > 1) {
+          var integer;
+          var fraction;
+          var sum;
+          integer = Math.floor(Number(watch));
+          fraction = (watch - integer).toFixed(2);
+          sum = (fraction*60);
+          this.calculationUPSRuntime.result = `${integer}h ${sum}min`;
+        }
+    }
+    },
+    getResultCalculationBattery() {
+      let a;
+      let Ah;
+      let total;
+      if (this.calculationBattery.powerUPS === '') {
+        alert('Введите мощность ИБП')
+      } else if (this.calculationBattery.inverterEfficiency === '') {
+        alert('Введите значение КПД инвертора, или переключите в заначение по умолчанию 0,8')
+      } else if (this.calculationBattery.time === '') {
+        alert('Введите значение Время работы')
+      } else if (this.calculationBattery.ratedBatteryVoltage === '') {
+        alert('Введите Номинальное напряжение АКБ')
+      } else {
+        a = this.calculationBattery.powerUPS / this.calculationBattery.ratedBatteryVoltage;
+        Ah = a * this.calculationBattery.time;
+        if(this.calculationBattery.inverterEfficiency > 1){
+          total = Ah/(this.calculationBattery.inverterEfficiency/100)
+        } else {
+          total = Ah/(this.calculationBattery.inverterEfficiency)
+        }
+        this.calculationBattery.result = total.toFixed(0);
+      }
     }
   },
   

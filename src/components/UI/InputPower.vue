@@ -2,13 +2,18 @@
     <div class="calc-input">
         <div class="calc-input__wrapper">
             <input class="calc-input__data-input" 
-                type="number" 
+                :type="typeInput" 
                 :id="inputId"
                 :disabled="isD"
                 :value="value" 
                 @input="updateName"
+                @focus="cl = true"
+                @blur="cl = false"
             >
-            <span class="calc-input__units">
+            <span 
+                :class="cl?'active': ''" 
+                class="calc-input__units"
+            >
                 <slot>Lorem</slot>
             </span>
             <div class="calc-input__input-error">
@@ -21,20 +26,25 @@
 <script>
 export default {
     name: 'input-power',
+    data() {
+        return {
+            cl:false
+        }
+    },
     props: {
         inputId: String,
         isD: {
             type: Boolean,
             default: false
         },
+        typeInput: String,
         value:[Number, String]
     },
     methods: {
         updateName(e) {
-      this.$emit("input", e.target.value);
-    }
-    }
-    
+            this.$emit("input", e.target.value);
+        }
+    }  
 }
 </script>
 
@@ -112,7 +122,7 @@ export default {
             border-radius: 8px;
             @include font($font-size: 16, $line-height: 16, $weight: 400);
             color: #2B2B2B;
-            &.focus {
+            &.active {
                 border-color: #8A8A8A;
             }
             &.disabled {
