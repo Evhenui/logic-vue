@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss">
 .header-calc {
-    padding: 32px 0;
+    padding: 32px 24px;
     background: var(--color-blue-white);
     box-shadow: 0px 3px 11px rgba(0, 0, 0, 0.2);
     border-radius: 16px;
@@ -30,7 +30,7 @@ export default {
         width: 100%;
         margin: 0 auto;
         @media (max-width: 960px) {
-        @include font($font-size: 16, $line-height: 22, $weight: 400);
+            @include font($font-size: 16, $line-height: 22, $weight: 400);
         }
     }
 }

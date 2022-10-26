@@ -125,7 +125,7 @@
                     <button-switch v-model="stateSwitch.switchBatteryCapacity" />
                   </div>
 
-                  <input-power typeInput="number" inputId="w" :isD="!stateSwitch.switchBatteryCapacity" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
+                  <input-power typeInput="number" inputId="w" :isDisable="!stateSwitch.switchBatteryCapacity" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -194,7 +194,7 @@
                     <button-switch v-model="stateSwitch.switchBackupTime" />
                   </div>
 
-                  <input-power typeInput="number" :isD="!stateSwitch.switchBackupTime" inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
+                  <input-power typeInput="number" :isDisable="!stateSwitch.switchBackupTime" inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -238,7 +238,6 @@ export default Vue.extend({
 
   data() {
     return {
-      isDisabled: false,
       stateSwitch: {
         switchBatteryCapacity: false,
         switchBackupTime: false,
@@ -259,14 +258,14 @@ export default Vue.extend({
       },
       calculationBattery: {
         powerUPS: '',
-        inverterEfficiency: '', 
+        inverterEfficiency: 0.8, 
         time: '',
         ratedBatteryVoltage:'',
         result: ''
       },
       calculationUPSRuntime: {
         load: '',
-        inverterEfficiency: '',
+        inverterEfficiency: 0.8,
         ratedBatteryVoltage: '',
         batteryCapacity: '',
         result: ''
@@ -275,9 +274,6 @@ export default Vue.extend({
   },
   
   methods: {
-    isActive(state) {
-        this.isDisabled = state;
-    },
     selectAllCheckboxes() {
       //спросить
         for (const key in this.checkboxes) {

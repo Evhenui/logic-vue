@@ -4,15 +4,16 @@
             <input class="calc-input__data-input" 
                 :type="typeInput" 
                 :id="inputId"
-                :disabled="isD"
+                :disabled="isDisable"
                 :value="value" 
                 @input="updateName"
                 @focus="cl = true"
                 @blur="cl = false"
             >
             <span 
-                :class="cl?'active': ''" 
+                :class="{'active':cl, 'disabled':isDisable}" 
                 class="calc-input__units"
+            
             >
                 <slot>Lorem</slot>
             </span>
@@ -33,12 +34,12 @@ export default {
     },
     props: {
         inputId: String,
-        isD: {
+        isDisable: {
             type: Boolean,
             default: false
         },
         typeInput: String,
-        value:[Number, String]
+        value:[Number, String],
     },
     methods: {
         updateName(e) {
@@ -71,15 +72,16 @@ export default {
             transition: all .1s ease-in-out;
             &::-webkit-outer-spin-button,
             &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+                -webkit-appearance: none;
+                margin: 0;
             }
             &:focus {
-            border-color: #8A8A8A;
+                border-color: #8A8A8A;
             }
             &:disabled {
-            border-color: #E9E9E9;
-            color: #B4B6B8;
+                border-color: #E9E9E9;
+                color: #B4B6B8;
+                cursor: auto;
             }
         }
 
