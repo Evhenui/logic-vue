@@ -1,7 +1,11 @@
 <template>
     <div class="calc-switch">
     <label class="calc-switch__wrapper">
-        <input @change="$emit('myinput', $event.target.checked)"  class="calc-switch__input" type="checkbox">
+        <input 
+            :checked="value" 
+            @change="updateSwitchState"
+            class="calc-switch__input" 
+            type="checkbox">
         <span class="calc-switch__slider"></span>
     </label>
 </div> 
@@ -10,15 +14,18 @@
 <script>
 export default {
     name: 'button-switch',
+    props: {
+        value: Boolean
+    },
+   methods: {
+        updateSwitchState(event) {
+            this.$emit("input", event.target.checked);
+      }
+    }
 }
 </script>
 
 <style lang="scss">
-.test {
-    width: 200px;
-    height: 20px;
-    background: red;
-}
 .calc-switch {
     font-size: 0;
         &__wrapper {

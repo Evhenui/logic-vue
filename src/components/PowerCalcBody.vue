@@ -122,10 +122,10 @@
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
                     </helper-button>
-                    <button-switch @myinput="isActive" />
+                    <button-switch v-model="stateSwitch.switchBatteryCapacity" />
                   </div>
 
-                  <input-power typeInput="number" inputId="w" :isD="isDisabled" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
+                  <input-power typeInput="number" inputId="w" :isD="!stateSwitch.switchBatteryCapacity" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -187,15 +187,14 @@
                 <div class="calc-body__data-input-section">
                   <div class="calc-body__input-help switch">
                     <h3 class="calc-body__subtitle">КПД инвертора:</h3>
-                    <helper-button
-                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua.
                     </helper-button>
-                    <button-switch />
+                    <button-switch v-model="stateSwitch.switchBackupTime" />
                   </div>
 
-                  <input-power typeInput="number" inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
+                  <input-power typeInput="number" :isD="!stateSwitch.switchBackupTime" inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
                 </div>
 
                 <div class="calc-body__data-input-section">
@@ -240,6 +239,10 @@ export default Vue.extend({
   data() {
     return {
       isDisabled: false,
+      stateSwitch: {
+        switchBatteryCapacity: false,
+        switchBackupTime: false,
+      },
        checkboxes: {
          interactiveUPSLine: false,
          correctSineUPS: false,
@@ -267,7 +270,7 @@ export default Vue.extend({
         ratedBatteryVoltage: '',
         batteryCapacity: '',
         result: ''
-      }
+      },
     }
   },
   

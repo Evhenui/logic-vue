@@ -9,9 +9,7 @@
         </div>
         <div class="button-help__description-wrapper">
             <p class="button-help__description">
-                <slot>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                </slot>   
+                <slot>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</slot>   
             </p>    
         </div>                     
     </div>
@@ -32,13 +30,14 @@ export default {
    flex: 0 0 auto;
     &:hover &__main-wrapper {
         opacity: 1;
-        z-index: 1;
+        visibility: visible;
     }
     &__main-wrapper {
      top: -20px;
      left: 23px;
      opacity: 0;
-     z-index: -1;
+     z-index: 1;
+     visibility: hidden;
      position: absolute;
      transition: all .2s ease-in-out; 
      @include flex-container($direction: row, $spacing: null, $alignment: center);
