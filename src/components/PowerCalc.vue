@@ -1,8 +1,10 @@
 <template>
   <div class="calc">
     <div class="calc__wrapper">
-      <power-calc-header>С помощью данного калькулятора можно ориентировочно рассчитать необходимую ёмкость аккумулятора для источника бесперебойного питания.</power-calc-header>
-      <power-calc-body/>
+      <power-calc-header>
+        С помощью данного калькулятора можно ориентировочно рассчитать необходимую ёмкость аккумулятора для источника бесперебойного питания.
+      </power-calc-header>
+      <power-calc-main/>
       <power-calc-footer />
     </div>
   </div>
@@ -12,18 +14,17 @@
 import Vue from "vue";
 import PowerCalcFooter from "./PowerCalcFooter.vue";
 import PowerCalcHeader from "./PowerCalcHeader.vue";
-import PowerCalcBody from "./PowerCalcBody.vue";
+import PowerCalcMain from "./PowerCalcMain.vue";
 
 export default Vue.extend({
   components: {
     PowerCalcFooter,
     PowerCalcHeader,
-    PowerCalcBody,
+    PowerCalcMain,
   },
   data() {
     return {
       activeButtonMore: false,
-      valera: document.querySelector("[data-test]"),
     };
   },
   methods: {},

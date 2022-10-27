@@ -1,13 +1,7 @@
 <template>
   <section class="calc-body">
-
-    
      <section class="calc-body__source-power">
-        <section class="calc-body__source-header">
-          <h3 class="calc-body__source-power-header-title">
-            Расчет источника бесперебойного питания (расчет ИБП)
-          </h3>
-        </section>
+      <title-section>Расчет источника бесперебойного питания (расчет ИБП)</title-section>
 
         <section class="calc-body__source-power-body">
           <form class="calc-body__source-form" action="">
@@ -91,12 +85,7 @@
       </section>
 
       <section class="calc-body__source-power">
-        <section class="calc-body__source-header">
-          <h3 class="calc-body__source-power-header-title">
-            Расчет емкости аккумуляторной батареи для источника бесперебойного
-            питания
-          </h3>
-        </section>
+        <title-section>Расчет емкости аккумуляторной батареи для источника бесперебойного питания</title-section>
 
         <section class="calc-body__source-power-body">
           <form class="calc-body__form" action="">
@@ -161,11 +150,7 @@
       </section>
 
       <section class="calc-body__source-power">
-        <section class="calc-body__source-header">
-          <h3 class="calc-body__source-power-header-title">
-            Расчет времени автономной работы ИБП
-          </h3>
-        </section>
+        <title-section>Расчет времени автономной работы ИБП</title-section>
 
         <section class="calc-body__source-power-body">
           <form class="calc-body__form" action="">
@@ -232,9 +217,13 @@
 <script>
 import Vue from "vue";
 import PowerCalcRecommendation from './PowerCalcRecommendation.vue'
+import TitleSection from '@/components/sections/TitleSection.vue'
+import FormSection from '@/components/sections/FormSection.vue'
+import FormSectionWithCheckboxes from '@/components/sections/FormSectionWithCheckboxes.vue'
+import PopupHelper from '@/components/UI/PopupHelper.vue'
 
 export default Vue.extend({
-  components: {PowerCalcRecommendation},
+  components: {PowerCalcRecommendation, TitleSection, FormSection, FormSectionWithCheckboxes, PopupHelper},
 
   data() {
     return {
@@ -270,10 +259,14 @@ export default Vue.extend({
         batteryCapacity: '',
         result: ''
       },
+    showModal: false
     }
   },
   
   methods: {
+    showDialog() {
+            this.dialogVisible = true
+        },
     selectAllCheckboxes() {
       //спросить
         for (const key in this.checkboxes) {
