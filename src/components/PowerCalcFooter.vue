@@ -112,7 +112,7 @@ export default {
 
         &__item {
             @include font($font-size: 20, $line-height: 24, $weight: 600);
-            color: #F36C21;
+            color: $color-main;
             letter-spacing: 0.01em;
             margin-bottom: 20px;
             @media (max-width: 960px) {
@@ -151,7 +151,7 @@ export default {
         &__button-more-title {
             @include font($font-size: 16, $line-height: 22, $weight: 400);
             letter-spacing: 0.02em;
-            color: #F36C21;
+            color: $color-main;
         }
 
         &__button-arrow {
@@ -224,14 +224,14 @@ export default {
 
         &__list-num {
             line-height: 22px;
-            color: #F36C21;
+            color: $color-main;
         }
 
         &__item-icon {
             display: inline-block;
             width: 8px;
             height: 8px;
-            background: #F36C21;
+            background: $color-main;
             border-radius: 50%;
         }
     }

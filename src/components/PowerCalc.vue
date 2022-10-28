@@ -22,7 +22,6 @@ export default Vue.extend({
     PowerCalcHeader,
     PowerCalcMain,
   },
-
 });
 </script>
 
@@ -43,11 +42,7 @@ export default Vue.extend({
   }
 
   &__inputs-wrapper {
-    @include flex-container(
-      $direction: column,
-      $spacing: flex-start,
-      $alignment: null
-    );
+    @include flex-container($direction: column, $spacing: flex-start, $alignment: null);
     row-gap: 56px;
     margin-bottom: 56px;
     @media (max-width: 960px) {
@@ -80,11 +75,7 @@ export default Vue.extend({
   }
 
   &__source-form {
-    @include flex-container(
-      $direction: row,
-      $spacing: space-between,
-      $alignment: null
-    );
+    @include flex-container($direction: row, $spacing: space-between, $alignment: null);
     margin-bottom: 56px;
     @media (max-width: 960px) {
       flex-direction: column;
@@ -94,11 +85,7 @@ export default Vue.extend({
   }
 
   &__checkbox {
-    @include flex-container(
-      $direction: row,
-      $spacing: null,
-      $alignment: center
-    );
+    @include flex-container($direction: row, $spacing: null, $alignment: center);
     column-gap: 16px;
   }
 
@@ -113,20 +100,12 @@ export default Vue.extend({
   }
 
   &__source-power-select {
-    @include flex-container(
-      $direction: column,
-      $spacing: null,
-      $alignment: null
-    );
+    @include flex-container($direction: column, $spacing: null, $alignment: null);
     row-gap: 24px;
   }
 
   &__source-power-inputs-enter {
-    @include flex-container(
-      $direction: column,
-      $spacing: null,
-      $alignment: left
-    );
+    @include flex-container($direction: column, $spacing: null, $alignment: left);
     row-gap: 56px;
     max-width: 678px;
     width: 100%;

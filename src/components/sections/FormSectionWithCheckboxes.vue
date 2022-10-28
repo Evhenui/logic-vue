@@ -78,7 +78,7 @@
     </section>
 </template>
 
-<script>
+<script lang="ts">
 
 import InputPower from '@/components/UI/InputPower.vue'
 import InputCheckbox from '@/components/UI/InputCheckbox.vue'

@@ -9,7 +9,7 @@
     </section>
 </template>
 
-<script>
+<script lang="ts">
 import ButtonCatalog from '@/components/UI/ButtonCatalog.vue'
 export default {
     components: {
@@ -24,7 +24,7 @@ export default {
     &__title {
       @include font($font-size: 20, $line-height: 30, $weight: 600);
       text-transform: uppercase;
-      color: #F36C21;
+      color: $color-main;
       margin-bottom: 24px;
       letter-spacing: 0.01em;
       @media (max-width: 960px) {

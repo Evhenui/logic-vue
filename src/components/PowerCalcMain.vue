@@ -287,13 +287,13 @@ export default Vue.extend({
           alert('Введите емкость АКБ')
         } else {
         if ( + (this as any).calculationUPSRuntime.load > 1 && (this as any).calculationUPSRuntime.load !== ''){
-          watch = +(((+(this as any).calculationUPSRuntime.ratedBatteryVoltage * +(this as any).calculationUPSRuntime.ratedBatteryVoltage ) / +(this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
+          watch = +((((this as any).calculationUPSRuntime.ratedBatteryVoltage * (this as any).calculationUPSRuntime.ratedBatteryVoltage ) / (this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
         } else {
-          watch = +(((+(this as any).calculationUPSRuntime.ratedBatteryVoltage * +(this as any).calculationUPSRuntime.ratedBatteryVoltage ) / +(this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency)).toFixed(2);
+          watch = +((((this as any).calculationUPSRuntime.ratedBatteryVoltage * (this as any).calculationUPSRuntime.ratedBatteryVoltage ) / (this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency)).toFixed(2);
         }
         
         if(watch <= 1) {
-          (this as any).calculationUPSRuntime.result = ` ${Math.ceil(+watch*60)}min`;
+          (this as any).calculationUPSRuntime.result = `${Math.ceil(+watch*60)}min`;
         } else if (watch > 1) {
           var integer:Number;
           var fraction:Number;
@@ -316,8 +316,8 @@ export default Vue.extend({
       } else if ((this as any).calculationBattery.ratedBatteryVoltage === '') {
         alert('Введите Номинальное напряжение АКБ')
       } else {
-        a = + (this as any).calculationBattery.powerUPS / + (this as any).calculationBattery.ratedBatteryVoltage;
-        Ah = + a * + (this as any).calculationBattery.time;
+        a = (this as any).calculationBattery.powerUPS / (this as any).calculationBattery.ratedBatteryVoltage;
+        Ah = + a * (this as any).calculationBattery.time;
         if((this as any).calculationBattery.inverterEfficiency > 1){
           total = + Ah / ((this as any).calculationBattery.inverterEfficiency / 100)
         } else {
@@ -444,7 +444,7 @@ export default Vue.extend({
     &.orande-title {
       @include font($font-size: 20, $line-height: 30, $weight: 600);
       text-transform: uppercase;
-      color: #f36c21;
+      color: $color-main;
       margin-bottom: 24px;
     }
     &.source-power {

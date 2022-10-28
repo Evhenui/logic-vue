@@ -8,13 +8,9 @@
 import Vue from 'vue';
 import PowerCalc from '@/components/PowerCalc.vue'
 
-
 export default Vue.extend({
   name: 'App',
-  components: {
-   PowerCalc
-
-  }
+  components: { PowerCalc }
 });
 </script>
 
