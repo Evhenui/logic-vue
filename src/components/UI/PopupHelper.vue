@@ -30,12 +30,13 @@
 </transition>
 </template>
 
-<script>
+<script lang="ts">
+
 export default {
     name:'popup-helper',
     methods: {
-        closeModal() {
-            this.$emit('close')
+        closeModal():void {
+            (this as any).$emit('close')
             document.documentElement.style.overflow = 'auto';
         }
     }
@@ -43,7 +44,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .modal-helper {
     z-index: 2;
     display: none;

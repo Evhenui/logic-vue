@@ -22,12 +22,7 @@ export default Vue.extend({
     PowerCalcHeader,
     PowerCalcMain,
   },
-  data() {
-    return {
-      activeButtonMore: false,
-    };
-  },
-  methods: {},
+
 });
 </script>
 

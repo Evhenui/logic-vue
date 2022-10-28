@@ -5,8 +5,8 @@
         <h1 class="calc-about-selected__title">Комплект видеонаблюдения для квартиры на 2 камеры</h1>
         <p class="calc-about-selected__description head">Готовые комплекты видеонаблюдения на 2 камеры в одной коробке. Комплекты видеонаблюдения GreenVision бюджетное решение для квартиры, небольшого офиса или дачи.</p>
     <button 
-        @click="active = !active"
-        :class="active ? 'active' : ''" 
+        @click="activeBody"
+        :class="{'active' : active}" 
         class="calc-about-selected__button-more"   
     >
         <span class="calc-about-selected__button-title">Подробнее</span>
@@ -18,8 +18,8 @@
     </button>
     </section>
         <section class="calc-about-selected__body"
-        :class="active ? 'active' : ''" 
-        :style="active ? height='hightFooter': height=''"
+            :style="[active? { height: hightFooter }:{}]"
+            ref="sectionBody"
         >
         <section class="calc-about-selected__section">
         <h3 class="calc-about-selected__offer under-list">Купить комплект видеонаблюдения на 2 камеры в Украине: почему это выгодно?</h3>
@@ -89,6 +89,13 @@ export default {
             hightFooter: 0
         }
     },
+    methods: {
+        activeBody():void {
+            const footerBody: HTMLElement | any = (this as any).$refs.sectionBody;
+            (this as any).active = !(this as any).active;
+            (this as any).hightFooter = `${footerBody.scrollHeight}px`;
+        }
+    },   
 }
 </script>
 
@@ -133,8 +140,8 @@ export default {
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             display: none;
             @media (max-width: 960px) {
-            display: flex;
-            column-gap: 16px;
+                @include flex-container($direction: row, $spacing: null, $alignment: center);
+                column-gap: 16px;
             }
             &.active {
                 display: none;
@@ -181,11 +188,8 @@ export default {
         &__body {
             transition: all .2s ease-in-out;
             @media (max-width: 960px) {
-                height: 0;
                 overflow: hidden;
-                &.active {
-                    height: 910px;
-                }
+                height: 0;
             }
         }
 
@@ -208,7 +212,7 @@ export default {
             display: flex;
             column-gap: 8px;
             &.bulleted-list {
-            align-items: center;
+                align-items: center;
             }
         }
 

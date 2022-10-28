@@ -13,16 +13,17 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+
     name: 'input-checkbox',
     props: {
         inputType: String,
         value: Boolean
     },
     methods: {
-        updateChecked(e) {
-      this.$emit("input", e.target.checked);
+        updateChecked(event:Event):void {
+      (this as any).$emit("input", (event.target as HTMLInputElement).checked);
       }
     }
 }
@@ -37,6 +38,7 @@ export default {
     }
 
     &__label {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       @include font($font-size: 16, $line-height: 24, $weight: 400);
       display: inline-flex;
       align-items: center;

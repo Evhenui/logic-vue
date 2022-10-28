@@ -214,7 +214,7 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import PowerCalcRecommendation from './PowerCalcRecommendation.vue'
 import TitleSection from '@/components/sections/TitleSection.vue'
@@ -223,7 +223,11 @@ import FormSectionWithCheckboxes from '@/components/sections/FormSectionWithChec
 import PopupHelper from '@/components/UI/PopupHelper.vue'
 
 export default Vue.extend({
-  components: {PowerCalcRecommendation, TitleSection, FormSection, FormSectionWithCheckboxes, PopupHelper},
+  components: {
+    PowerCalcRecommendation, TitleSection, 
+    FormSection, FormSectionWithCheckboxes, 
+    PopupHelper
+  },
 
   data() {
     return {
@@ -264,87 +268,62 @@ export default Vue.extend({
   },
   
   methods: {
-    showDialog() {
-            this.dialogVisible = true
-        },
-    selectAllCheckboxes() {
-      //спросить
-        for (const key in this.checkboxes) {
-          if(this.checkboxes.selectAll) {
-              this.checkboxes[key] = true;
+    selectAllCheckboxes():void {
+        for (const key in (this as any).checkboxes) {
+          if((this as any).checkboxes.selectAll) {
+              (this as any).checkboxes[key] = true;
           } else {
-            this.checkboxes[key] = false;
+            (this as any).checkboxes[key] = false;
           } 
         }
-        /*
-        if(this.checkboxes.selectAll) {
-          this.checkboxes.interactiveUPSLine = true;
-          this.checkboxes.correctSineUPS = true;
-          this.checkboxes.smartUPS = true;
-          this.checkboxes.gibridUPS = true;
-          this.checkboxes.mpptUPS = true;
-          this.checkboxes.selectAll = true;
-        } else {
-          this.checkboxes.interactiveUPSLine = false;
-          this.checkboxes.correctSineUPS = false;
-          this.checkboxes.smartUPS = false;
-          this.checkboxes.gibridUPS = false;
-          this.checkboxes.mpptUPS = false;
-          this.checkboxes.selectAll = false;
-        }*/
-       
     },
-    getResultCalculationUPS() {
-      let watch;
-        if (this.calculationUPSRuntime.load === '') {
+    getResultCalculationUPS():void {
+      let watch:Number;
+        if ((this as any).calculationUPSRuntime.load === '') {
           alert('Введите нагрузку')
-        } else if (this.calculationUPSRuntime.inverterEfficiency === '') {
-          alert('Введите значение КПД инвертора, или переключите в заначение по умолчанию 0,8')
-        } else if (this.calculationUPSRuntime.ratedBatteryVoltage === '') {
+        } else if ((this as any).calculationUPSRuntime.ratedBatteryVoltage === '') {
           alert('Введите Номинальное напряжение АКБ')
-        } else if (this.calculationUPSRuntime.ratedBatteryVoltage === '') {
+        } else if ((this as any).calculationUPSRuntime.ratedBatteryVoltage === '') {
           alert('Введите емкость АКБ')
         } else {
-        if (this.calculationUPSRuntime.load > 1 && this.calculationUPSRuntime.load !== ''){
-          watch = (((this.calculationUPSRuntime.ratedBatteryVoltage * this.calculationUPSRuntime.ratedBatteryVoltage ) / this.calculationUPSRuntime.load) * (this.calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
+        if ( + (this as any).calculationUPSRuntime.load > 1 && (this as any).calculationUPSRuntime.load !== ''){
+          watch = +(((+(this as any).calculationUPSRuntime.ratedBatteryVoltage * +(this as any).calculationUPSRuntime.ratedBatteryVoltage ) / +(this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
         } else {
-          watch = (((this.calculationUPSRuntime.ratedBatteryVoltage * this.calculationUPSRuntime.ratedBatteryVoltage ) / this.calculationUPSRuntime.load) * (this.calculationUPSRuntime.inverterEfficiency)).toFixed(2);
+          watch = +(((+(this as any).calculationUPSRuntime.ratedBatteryVoltage * +(this as any).calculationUPSRuntime.ratedBatteryVoltage ) / +(this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency)).toFixed(2);
         }
         
         if(watch <= 1) {
-          this.calculationUPSRuntime.result = ` ${Math.ceil(watch*60)}min`;
+          (this as any).calculationUPSRuntime.result = ` ${Math.ceil(+watch*60)}min`;
         } else if (watch > 1) {
-          var integer;
-          var fraction;
-          var sum;
+          var integer:Number;
+          var fraction:Number;
+          var sum:Number;
           integer = Math.floor(Number(watch));
-          fraction = (watch - integer).toFixed(2);
-          sum = (fraction*60);
-          this.calculationUPSRuntime.result = `${integer}h ${sum}min`;
+          fraction = + (+ watch - + integer).toFixed(2);
+          sum = (+ fraction * 60);
+          (this as any).calculationUPSRuntime.result = `${integer}h ${sum}min`;
         }
     }
     },
-    getResultCalculationBattery() {
-      let a;
-      let Ah;
-      let total;
-      if (this.calculationBattery.powerUPS === '') {
+    getResultCalculationBattery():void {
+      let a:Number;
+      let Ah:Number;
+      let total:Number;
+      if ((this as any).calculationBattery.powerUPS === '') {
         alert('Введите мощность ИБП')
-      } else if (this.calculationBattery.inverterEfficiency === '') {
-        alert('Введите значение КПД инвертора, или переключите в заначение по умолчанию 0,8')
-      } else if (this.calculationBattery.time === '') {
+      } else if ((this as any).calculationBattery.time === '') {
         alert('Введите значение Время работы')
-      } else if (this.calculationBattery.ratedBatteryVoltage === '') {
+      } else if ((this as any).calculationBattery.ratedBatteryVoltage === '') {
         alert('Введите Номинальное напряжение АКБ')
       } else {
-        a = this.calculationBattery.powerUPS / this.calculationBattery.ratedBatteryVoltage;
-        Ah = a * this.calculationBattery.time;
-        if(this.calculationBattery.inverterEfficiency > 1){
-          total = Ah/(this.calculationBattery.inverterEfficiency/100)
+        a = + (this as any).calculationBattery.powerUPS / + (this as any).calculationBattery.ratedBatteryVoltage;
+        Ah = + a * + (this as any).calculationBattery.time;
+        if((this as any).calculationBattery.inverterEfficiency > 1){
+          total = + Ah / ((this as any).calculationBattery.inverterEfficiency / 100)
         } else {
-          total = Ah/(this.calculationBattery.inverterEfficiency)
+          total = + Ah / ((this as any).calculationBattery.inverterEfficiency)
         }
-        this.calculationBattery.result = total.toFixed(0);
+        (this as any).calculationBattery.result = total.toFixed(0);
       }
     }
   },

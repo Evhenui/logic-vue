@@ -4,12 +4,12 @@
    </button>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: 'button-orange',
     methods: {
-      resultData() {
-       this.$emit('getResult')
+      resultData():void {
+       (this as any).$emit('getResult')
       }
     }
 }

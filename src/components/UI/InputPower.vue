@@ -24,7 +24,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: 'input-power',
     data() {
@@ -42,8 +42,8 @@ export default {
         value:[Number, String],
     },
     methods: {
-        updateName(e) {
-            this.$emit("input", e.target.value);
+        updateName(event: Event):void {
+            (this as any).$emit("input", (event.target as HTMLInputElement).value);
         }
     }  
 }

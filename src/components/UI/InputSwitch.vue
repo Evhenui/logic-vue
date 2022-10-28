@@ -11,15 +11,15 @@
 </div> 
 </template>
 
-<script>
+<script lang="ts">
 export default {
     name: 'button-switch',
     props: {
         value: Boolean
     },
    methods: {
-        updateSwitchState(event) {
-            this.$emit("input", event.target.checked);
+        updateSwitchState(event: Event) {
+            (this as any).$emit("input", (event.target as HTMLInputElement).checked);
       }
     }
 }

@@ -24,25 +24,24 @@
 
 </template>
 
-<script>
+<script lang="ts">
 import PopupHelper from './PopupHelper.vue'
 export default {
     name: 'helper-button',
-    components: {
-        PopupHelper
-    },
     data() {
         return {
             showModal: false
         }
     },
+    components: {
+        PopupHelper
+    },
     methods: {
-        showModalHelper() {
-            window.innerWidth > 960? this.showModal= false : this.showModal= true;
-            if(this.showModal === true) {
+        showModalHelper():void{
+            window.innerWidth > 960? (this as any).showModal = false : (this as any).showModal = true;
+            if((this as any).showModal === true) {
                 document.documentElement.style.overflow = 'hidden';
             }
-            
         }
     }
 }
