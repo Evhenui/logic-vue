@@ -1,66 +1,76 @@
 <template>
 <section class="calc-enter-section">
   <title-section>Расчет емкости аккумуляторной батареи для источника бесперебойного питания</title-section>
-        <section class="calc-enter-section__body">
-          <form class="calc-enter-section__form-without-checkboxes" action="">
-            <section class="calc-enter-section__inputs-wrapper">
-              <section class="calc-enter-section__inputs-enter">
-                <div class="calc-enter-section__data-input-section">
-                  <div class="calc-enter-section__input-help">
-                    <h3 class="calc-enter-section__subtitle source-power">Мощность ИБП:</h3>
-                    <helper-button
-                      >Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </helper-button>
-                  </div>
+    <section class="calc-enter-section__body">
+      <form class="calc-enter-section__form-without-checkboxes" action="">
+        <section class="calc-enter-section__inputs-wrapper">
+          <section class="calc-enter-section__inputs-enter">
+            <div class="calc-enter-section__data-input-section">
+              <div class="calc-enter-section__input-help">
+                <h3 class="calc-enter-section__subtitle source-power">Мощность ИБП:</h3>
+                <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</helper-button>
+              </div>
 
-                  <input-power typeInput="number" inputId="w" v-model.number="calculationBattery.powerUPS">W</input-power>
-                </div>
-
-                <div class="calc-enter-section__data-input-section">
-                  <div class="calc-enter-section__input-help switch">
-                    <h3 class="calc-enter-section__subtitle source-power">КПД инвертора:</h3>
-                    <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </helper-button>
-                    <button-switch v-model="stateSwitch.switchBatteryCapacity" />
-                  </div>
-
-                  <input-power typeInput="number" inputId="w" :isDisable="!stateSwitch.switchBatteryCapacity" v-model.number="calculationBattery.inverterEfficiency">W</input-power>
-                </div>
-
-                <div class="calc-enter-section__data-input-section">
-                  <div class="calc-enter-section__input-help">
-                    <h3 class="calc-enter-section__subtitle source-power">Время работы:</h3>
-                  </div>
-
-                  <input-power typeInput="number" inputId="time" v-model.number="calculationBattery.time">часов</input-power>
-                </div>
-
-                <div class="calc-enter-section__data-input-section">
-                  <div class="calc-enter-section__input-help">
-                    <h3 class="calc-enter-section__subtitle source-power">Номинальное напряжение АКБ:</h3>
-                  </div>
-
-                  <input-power typeInput="number" inputId="v" v-model.number="calculationBattery.ratedBatteryVoltage">V</input-power>
-                </div>
-              </section>
-
-              <button-orange @getResult="getResultCalculationBattery" />
-            </section>
+              <input-power 
+                :errorState = "stateInput.powerUPS"
+                typeInput="number" 
+                inputId="w" 
+                v-model.number="calculationBattery.powerUPS"
+              >W
+              </input-power>
+            </div>
 
             <div class="calc-enter-section__data-input-section">
-              <h3 class="calc-enter-section__subtitle source-power result">
-                Минимальная ёмкость АКБ:
-              </h3>
-              <input-power typeInput="text" inputId="ah" v-model.number="calculationBattery.result">Ah</input-power>
-            </div>
-          </form>
+              <div class="calc-enter-section__input-help switch">
+                <h3 class="calc-enter-section__subtitle source-power">КПД инвертора:</h3>
+                <helper-button>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</helper-button>
+                <button-switch v-model="stateSwitch.switchBatteryCapacity" />
+              </div>
 
-          <power-calc-recommendation>Рекомендуемые ИБП:</power-calc-recommendation>
+              <input-power 
+                :errorState = "stateInput.inverterEfficiency"
+                typeInput="number" 
+                inputId="w" 
+                :isDisable="!stateSwitch.switchBatteryCapacity" 
+                v-model.number="calculationBattery.inverterEfficiency">W</input-power>
+            </div>
+
+            <div class="calc-enter-section__data-input-section">
+              <div class="calc-enter-section__input-help">
+                <h3 class="calc-enter-section__subtitle source-power">Время работы:</h3>
+              </div>
+
+              <input-power 
+                :errorState = "stateInput.time"
+                typeInput="number" 
+                inputId="time" 
+                v-model.number="calculationBattery.time">часов</input-power>
+            </div>
+
+            <div class="calc-enter-section__data-input-section">
+              <div class="calc-enter-section__input-help">
+                <h3 class="calc-enter-section__subtitle source-power">Номинальное напряжение АКБ:</h3>
+              </div>
+
+              <input-power 
+                :errorState = "stateInput.ratedBatteryVoltage"
+                typeInput="number" 
+                inputId="v" 
+                v-model.number="calculationBattery.ratedBatteryVoltage">V</input-power>
+            </div>
+          </section>
+
+          <button-orange @getResult="getResultCalculationBattery" />
         </section>
+
+        <div class="calc-enter-section__data-input-section">
+          <h3 class="calc-enter-section__subtitle source-power result">Минимальная ёмкость АКБ:</h3>
+          <input-power typeInput="text" inputId="ah" v-model.number="calculationBattery.result">Ah</input-power>
+        </div>
+      </form>
+
+      <power-calc-recommendation>Рекомендуемые ИБП:</power-calc-recommendation>
+    </section>
 </section>
 </template>
 
@@ -75,10 +85,10 @@ import PowerCalcRecommendation from '@/components/sections/PowerCalcRecommendati
 import ButtonSwitch from '@/components/UI/InputSwitch.vue'
 
 export default Vue.extend({
-   name: 'form-section',
    components: {
       InputPower, TitleSection, InputCheckbox,
-      HelperButton, ButtonOrange, PowerCalcRecommendation,ButtonSwitch
+      HelperButton, ButtonOrange, PowerCalcRecommendation,
+      ButtonSwitch
    },
     data() {
       return {
@@ -93,6 +103,13 @@ export default Vue.extend({
           switchBatteryCapacity: false,
           switchBackupTime: false,
         },
+        stateInput: {
+          powerUPS: false,
+          inverterEfficiency: false, 
+          time: false,
+          ratedBatteryVoltage:false,
+          result: false
+        }
       }
     },
     methods: {
@@ -100,13 +117,15 @@ export default Vue.extend({
         let a:Number;
         let Ah:Number;
         let total:Number;
-        if ((this as any).calculationBattery.powerUPS === '') {
-          alert('Введите мощность ИБП')
-        } else if ((this as any).calculationBattery.time === '') {
-          alert('Введите значение Время работы')
-        } else if ((this as any).calculationBattery.ratedBatteryVoltage === '') {
-          alert('Введите Номинальное напряжение АКБ')
-        } else {
+
+        for (const key in (this as any).calculationBattery) {
+            if((this as any).calculationBattery[key] === '') {
+              (this as any).stateInput[key] = true;
+            } else {
+              (this as any).stateInput[key] = false;
+            }
+        }
+
           a = (this as any).calculationBattery.powerUPS / (this as any).calculationBattery.ratedBatteryVoltage;
           Ah = + a * (this as any).calculationBattery.time;
           if((this as any).calculationBattery.inverterEfficiency > 1){
@@ -115,7 +134,7 @@ export default Vue.extend({
             total = + Ah / ((this as any).calculationBattery.inverterEfficiency)
           }
           (this as any).calculationBattery.result = total.toFixed(0);
-        }
+        
       }
     }
 })

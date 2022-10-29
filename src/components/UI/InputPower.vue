@@ -1,6 +1,6 @@
 <template>
     <div class="calc-input">
-        <div class="calc-input__wrapper">
+        <div :class="{'error':errorState}" class="calc-input__wrapper">
             <input class="calc-input__data-input" 
                 :type="typeInput" 
                 :id="inputId"
@@ -40,6 +40,10 @@ export default {
         },
         typeInput: String,
         value:[Number, String],
+        errorState: {
+            type: Boolean,
+            default: false
+        }
     },
     methods: {
         updateName(event: Event):void {
@@ -58,6 +62,18 @@ export default {
         }
         &__wrapper {
             position: relative;
+        }
+
+        &__wrapper.error &__data-input {
+            border-color: #EB1717;
+        }
+
+        &__wrapper.error &__units {
+            border-color: #EB1717;
+        }
+
+        &__wrapper.error &__input-error {
+            opacity: 1;
         }
 
         &__data-input {
@@ -94,19 +110,8 @@ export default {
             opacity: 0;
         }
 
-        &__wrapper.active &__input-error {
-            opacity: 1;
-        }
-
-        &__wrapper.active &__data-input {
-            border-color: #EB1717;
-        }
-
-        &__wrapper.active &__data-input-units {
-            border-color: #EB1717;
-        }
-
-        &__error {
+        &__error-text {
+            letter-spacing: 0.02em;
             @include font($font-size: 12, $line-height: 16, $weight: 400);
             color: #EB1717;
         }

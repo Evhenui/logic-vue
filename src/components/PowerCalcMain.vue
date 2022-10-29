@@ -1,8 +1,8 @@
 <template>
   <section class="calc-body">
-    <UpsCalculation class="calc-body__section"/>
-    <BatteryCalculation class="calc-body__section"/>
-    <UptimeCalculation class="calc-body__section"/>
+    <ups-calculation class="calc-body__section"/>
+    <battery-calculation class="calc-body__section"/>
+    <uptime-calculation class="calc-body__section"/>
   </section>
 </template>
 
