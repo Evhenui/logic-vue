@@ -1,5 +1,4 @@
 <template>
-<div>
     <div class="button-help" @click="showModalHelper">
         <div class="mobile-not">
             <img src="@/assets/icons/help-link.png" alt="help" width="16" height="16">
@@ -20,8 +19,6 @@
              <popup-helper :class="{'active': showModal}" v-if="showModal" @close="showModal = false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</popup-helper>
         </div>
     </div>
-</div>
-
 </template>
 
 <script lang="ts">

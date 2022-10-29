@@ -37,7 +37,8 @@ export default {
         background: #8A8A8A;
       }
       @media (max-width: 960px) {
-        max-width: 100%;
+        max-width: 343px;
+        width: 100%;
       }
   }
 </style>
