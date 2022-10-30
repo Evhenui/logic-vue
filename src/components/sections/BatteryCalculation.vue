@@ -65,7 +65,7 @@
 
         <div class="calc-enter-section__data-input-section">
           <h3 class="calc-enter-section__subtitle source-power result">Минимальная ёмкость АКБ:</h3>
-          <input-power typeInput="text" inputId="ah" v-model.number="calculationBattery.result">Ah</input-power>
+          <input-power typeInput="text" inputId="ah" v-model.number="calculationBatteryResult">Ah</input-power>
         </div>
       </form>
 
@@ -97,8 +97,8 @@ export default Vue.extend({
           inverterEfficiency: 0.8, 
           time: '',
           ratedBatteryVoltage:'',
-          result: ''
         },
+        calculationBatteryResult: '',
         stateSwitch: {
           switchBatteryCapacity: false,
           switchBackupTime: false,
@@ -108,7 +108,6 @@ export default Vue.extend({
           inverterEfficiency: false, 
           time: false,
           ratedBatteryVoltage:false,
-          result: false
         }
       }
     },
@@ -117,15 +116,17 @@ export default Vue.extend({
         let a:Number;
         let Ah:Number;
         let total:Number;
-
+        let resultState:boolean = false;
         for (const key in (this as any).calculationBattery) {
             if((this as any).calculationBattery[key] === '') {
               (this as any).stateInput[key] = true;
+              resultState = false;    
             } else {
               (this as any).stateInput[key] = false;
+               resultState = true;
             }
         }
-
+        if(resultState) {
           a = (this as any).calculationBattery.powerUPS / (this as any).calculationBattery.ratedBatteryVoltage;
           Ah = + a * (this as any).calculationBattery.time;
           if((this as any).calculationBattery.inverterEfficiency > 1){
@@ -133,8 +134,8 @@ export default Vue.extend({
           } else {
             total = + Ah / ((this as any).calculationBattery.inverterEfficiency)
           }
-          (this as any).calculationBattery.result = total.toFixed(0);
-        
+          (this as any).calculationBatteryResult = total.toFixed(0);
+        }
       }
     }
 })

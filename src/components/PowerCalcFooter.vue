@@ -89,11 +89,25 @@ export default {
             hightFooter: 0
         }
     },
+    created():void {
+        window.addEventListener("resize", (this as any).myEventHandler);
+    },
+    destroyed():void {
+        window.removeEventListener("resize", (this as any).myEventHandler);
+    },
     methods: {
         activeBody():void {
             const footerBody: HTMLElement | any = (this as any).$refs.sectionBody;
             (this as any).active = !(this as any).active;
             (this as any).hightFooter = `${footerBody.scrollHeight}px`;
+        },
+        myEventHandler(event:any) {
+            const defaultSize:number = 100;
+            const footerBody: HTMLElement | any = (this as any).$refs.sectionBody;
+            (this as any).hightFooter = `${footerBody.scrollHeight}px`;
+            if(event.currentTarget.innerWidth > 960) {
+                (this as any).hightFooter = `${defaultSize}%`;
+            }  
         }
     },   
 }

@@ -16,7 +16,12 @@
                     </helper-button>
                   </div>
 
-                  <input-power typeInput="number" inputId="w" v-model.number="calculationUPSRuntime.load">W</input-power>
+                  <input-power 
+                    :errorState = "stateInput.load"
+                    typeInput="number" 
+                    inputId="w" 
+                    v-model.number="calculationUPSRuntime.load"
+                  >W</input-power>
                 </div>
 
                 <div class="calc-enter-section__data-input-section">
@@ -29,7 +34,13 @@
                     <button-switch v-model="stateSwitch.switchBackupTime" />
                   </div>
 
-                  <input-power typeInput="number" :isDisable="!stateSwitch.switchBackupTime" inputId="persent" v-model.number="calculationUPSRuntime.inverterEfficiency">%</input-power>
+                  <input-power 
+                    :errorState = "stateInput.inverterEfficiency"
+                    typeInput="number" 
+                    :isDisable="!stateSwitch.switchBackupTime" 
+                    inputId="persent" 
+                    v-model.number="calculationUPSRuntime.inverterEfficiency">%
+                    </input-power>
                 </div>
 
                 <div class="calc-enter-section__data-input-section">
@@ -37,7 +48,12 @@
                     <h3 class="calc-enter-section__subtitle source-power">Номинальное напряжение АКБ:</h3>
                   </div>
 
-                  <input-power typeInput="number" inputId="v" v-model.number="calculationUPSRuntime.ratedBatteryVoltage">V</input-power>
+                  <input-power 
+                    :errorState = "stateInput.ratedBatteryVoltage"
+                    typeInput="number" 
+                    inputId="v" 
+                    v-model.number="calculationUPSRuntime.ratedBatteryVoltage">V
+                  </input-power>
                 </div>
 
                 <div class="calc-enter-section__data-input-section">
@@ -45,7 +61,12 @@
                     <h3 class="calc-enter-section__subtitle source-power">Ёмкость АКБ:</h3>
                   </div>
 
-                  <input-power typeInput="number" inputId="ah" v-model.number="calculationUPSRuntime.batteryCapacity">Ah</input-power>
+                  <input-power 
+                    :errorState = "stateInput.batteryCapacity"
+                    typeInput="number" 
+                    inputId="ah" 
+                    v-model.number="calculationUPSRuntime.batteryCapacity">Ah
+                  </input-power>
                 </div>
               </section>
 
@@ -54,7 +75,7 @@
 
             <div class="calc-enter-section__data-input-section">
               <h3 class="calc-enter-section__subtitle source-power result">Время работы ИБП:</h3>
-              <input-power typeInput="text" inputId="time" v-model.number="calculationUPSRuntime.result">часов</input-power>
+              <input-power typeInput="text" inputId="time" v-model.number="calculationUPSRuntimeResult">часов</input-power>
             </div>
           </form>
 
@@ -64,7 +85,6 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import TitleSection from '@/components/sections/TitleSection.vue'
 import InputPower from '@/components/UI/InputPower.vue'
 import InputCheckbox from '@/components/UI/InputCheckbox.vue'
@@ -86,42 +106,51 @@ export default {
             inverterEfficiency: 0.8,
             ratedBatteryVoltage: '',
             batteryCapacity: '',
-            result: ''
         },
+        calculationUPSRuntimeResult: '',
          stateSwitch: {
             switchBatteryCapacity: false,
             switchBackupTime: false,
         },
+        stateInput: {
+          load: false,
+          inverterEfficiency: false,
+          ratedBatteryVoltage: false,
+          batteryCapacity: false,
+        }
     }
    },
    methods: {
     getResultCalculationUPS():void {
-      let watch:Number;
-        if ((this as any).calculationUPSRuntime.load === '') {
-          alert('Введите нагрузку')
-        } else if ((this as any).calculationUPSRuntime.ratedBatteryVoltage === '') {
-          alert('Введите Номинальное напряжение АКБ')
-        } else if ((this as any).calculationUPSRuntime.ratedBatteryVoltage === '') {
-          alert('Введите емкость АКБ')
+      let watch:number;
+      let resultState:boolean = false;
+
+      for (const key in (this as any).calculationUPSRuntime) {
+        if((this as any).calculationUPSRuntime[key] === '') {
+          (this as any).stateInput[key] = true;
+          resultState = false;    
         } else {
-        if ( + (this as any).calculationUPSRuntime.load > 1 && (this as any).calculationUPSRuntime.load !== ''){
-          watch = +((((this as any).calculationUPSRuntime.ratedBatteryVoltage * (this as any).calculationUPSRuntime.ratedBatteryVoltage ) / (this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
-        } else {
-          watch = +((((this as any).calculationUPSRuntime.ratedBatteryVoltage * (this as any).calculationUPSRuntime.ratedBatteryVoltage ) / (this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency)).toFixed(2);
+          (this as any).stateInput[key] = false;
+            resultState = true;
         }
-        
-        if(watch <= 1) {
-          (this as any).calculationUPSRuntime.result = `${Math.ceil(+watch*60)}min`;
-        } else if (watch > 1) {
-          var integer:Number;
-          var fraction:Number;
-          var sum:Number;
-          integer = Math.floor(Number(watch));
-          fraction = + (+ watch - + integer).toFixed(2);
-          sum = (+ fraction * 60);
-          (this as any).calculationUPSRuntime.result = `${integer}h ${sum}min`;
-        }
-    }
+      }
+      
+      if ((this as any).calculationUPSRuntime.load > 1 && (this as any).calculationUPSRuntime.load !== ''){
+        watch = +((((this as any).calculationUPSRuntime.ratedBatteryVoltage * (this as any).calculationUPSRuntime.ratedBatteryVoltage ) / (this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency/100)).toFixed(2);
+      } else {
+        watch = +((((this as any).calculationUPSRuntime.ratedBatteryVoltage * (this as any).calculationUPSRuntime.ratedBatteryVoltage ) / (this as any).calculationUPSRuntime.load) * ((this as any).calculationUPSRuntime.inverterEfficiency)).toFixed(2);
+      }
+      if(watch <= 1) {
+        (this as any).calculationUPSRuntimeResult = `${Math.ceil(+watch*60)}min`;
+      } else if (watch > 1) {
+        let integer:Number;
+        let fraction:Number;
+        let sum:Number;
+        integer = Math.floor(Number(watch));
+        fraction = + (+ watch - + integer).toFixed(2);
+        sum = (+ fraction * 60);
+        (this as any).calculationUPSRuntimeResult = `${integer}h ${sum}min`;
+      }
     },
    }
 
